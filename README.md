@@ -3,20 +3,42 @@
 Automação inteligente para coleta, organização e mapeamento de dados de obras.
 
 ---
+## 💡 Problema
+
+Empresas que trabalham com obras muitas vezes enfrentam dificuldades para organizar informações recebidas via mensagens, como endereço, responsável e status.
+
+Isso gera retrabalho, perda de dados e falta de controle.
+
+---
+
+## 🚀 Solução
+
+Este agente de IA automatiza todo o processo:
+
+- Recebe dados via Telegram
+- Interpreta usando Inteligência Artificial
+- Organiza automaticamente em uma planilha
+- Mapeia as obras no Google Maps
+
+Tudo isso sem intervenção manual.
+
+## 🧠 Arquitetura do Projeto
+
+Telegram → n8n → OpenAI → JSON → Google Sheets → Google Maps
 
 ## 🚀 Demonstração
-
-### 📊 Planilha automática
-![Planilha](docs/planilha.jpg)
-
-### 🗺️ Mapeamento no Google Maps
-![Mapa](docs/mapa.jpg)
 
 ### ⚙️ Fluxo no n8n
 ![Fluxo](docs/fluxo.jpg)
 
 ### 🤖 Agente Bot 
 ![Agente](docs/agentebot.jpg)
+
+### 📊 Planilha automática
+![Planilha](docs/planilha.jpg)
+
+### 🗺️ Mapeamento no Google Maps
+![Mapa](docs/mapa.jpg)
 
 ---
 
@@ -61,14 +83,38 @@ Saída:
 
 ---
 
-## 🚀 Próximos passos
+## ⚙️ Como usar
 
-- Integração com WhatsApp  
-- Hospedagem em servidor próprio  
-- Implementação de VPN  
-- Dashboard de monitoramento  
+1. Importar o arquivo `workflow_n8n.json` no n8n
+2. Configurar credenciais:
+   - Telegram Bot
+   - OpenAI
+   - Google Sheets
+3. Criar planilha com colunas:
+   - nome_obra
+   - responsavel
+   - endereco
+   - material
+   - andamento
+4. Executar o fluxo
 
 ---
+
+## 🚀 Próximos passos
+
+- Integração com WhatsApp
+- Hospedagem em servidor próprio
+- Implementação de memória persistente
+- Uso em ambiente real (petshop familiar) 
+
+---
+
+## 📈 Possíveis aplicações
+
+- Gestão de obras
+- Controle de entregas
+- Atendimento automatizado
+- Pequenas empresas
 
 ## 👨‍💻 Autor
 

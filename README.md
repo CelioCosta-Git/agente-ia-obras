@@ -1,13 +1,31 @@
 # 🤖 Agente IA para Gestão de Obras
 
-Este projeto automatiza o cadastro e organização de obras utilizando Inteligência Artificial.
+Automação inteligente para coleta, organização e mapeamento de dados de obras.
 
-## 🚀 O que o agente faz
+---
 
-- Recebe informações por mensagem
-- Interpreta automaticamente com IA
-- Salva em planilha (Google Sheets)
-- Gera localização no mapa (Google Maps)
+## 🚀 Demonstração
+
+### 📊 Planilha automática
+![Planilha](docs/planilha.png)
+
+### 🗺️ Mapeamento no Google Maps
+![Mapa](docs/mapa.png)
+
+### ⚙️ Fluxo no n8n
+![Fluxo](docs/fluxo.png)
+
+---
+
+## 💡 O que o agente faz
+
+- Recebe dados via Telegram
+- Interpreta com Inteligência Artificial
+- Estrutura automaticamente os dados
+- Salva no Google Sheets
+- Gera localização no mapa
+
+---
 
 ## 🧠 Tecnologias
 
@@ -15,24 +33,40 @@ Este projeto automatiza o cadastro e organização de obras utilizando Inteligê
 - OpenAI
 - Google Sheets
 - Google Maps
-- Telegram
+- Telegram Bot
 
-## 🔄 Fluxo
+---
 
-1. Usuário envia mensagem
-2. IA extrai os dados
-3. Sistema organiza em JSON
-4. Dados são salvos automaticamente
-5. Localização é gerada no mapa
+## 🔄 Fluxo do sistema
 
-## 📌 Exemplo
+1. Usuário envia mensagem  
+2. IA extrai os dados  
+3. Conversão para JSON  
+4. Armazenamento automático  
+5. Geração de localização  
+
+---
+
+## 📌 Exemplo real
 
 Entrada:
 Obra Anhanguera, José, Rua X 123, vidro 8mm
 
 Saída:
-Dados estruturados + planilha + mapa
+✔ Planilha atualizada  
+✔ Localização no mapa  
 
 ---
 
-Projeto desenvolvido como prática de Inteligência Artificial aplicada.
+## 🚀 Próximos passos
+
+- Integração com WhatsApp  
+- Hospedagem em servidor próprio  
+- Implementação de VPN  
+- Dashboard de monitoramento  
+
+---
+
+## 👨‍💻 Autor
+
+Célio Costa

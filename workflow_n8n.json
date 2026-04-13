@@ -1,0 +1,299 @@
+{
+  "name": "Agente Obras IA + Maps",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "51969262-624c-4659-bfdc-eabc56189ab8",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        -16
+      ],
+      "webhookId": "83907387-8af4-49f5-ac0f-0efdeb127aca",
+      "credentials": {
+        "telegramApi": {
+          "id": "0ZVT6wA0HvFJ6p5r",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "maps_link",
+              "value": "={{ 'https://www.google.com/maps?q=' + encodeURIComponent($json.endereco) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0545b27a-fa64-4570-a39f-9439d97249fb",
+      "name": "Gerar Link Maps",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        640,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{$node[\"Telegram Trigger\"].json[\"message\"][\"chat\"][\"id\"]}}",
+        "text": "=✅ Obra cadastrada com sucesso!\n\n🏗️ Nome: {{ $json.nome_obra }}\n👷 Responsável: {{$json.responsavel}}\n📍 Endereço: {{$json.endereco}}\n📦 Material: {{$json.material}}\n📊 Andamento: {{$json.andamento}}\n\n🗺️ Ver no mapa:\n{{$json.maps_link}} ",
+        "additionalFields": {}
+      },
+      "id": "28e731bd-b224-49d3-98b4-9bed13ef766f",
+      "name": "Responder Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        -16
+      ],
+      "webhookId": "f1fea45b-4d17-4503-9ac5-3d0d2db1e88e",
+      "credentials": {
+        "telegramApi": {
+          "id": "0ZVT6wA0HvFJ6p5r",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "={{ $json.message.text }}"
+            },
+            {
+              "role": "system",
+              "content": "Você é um agente de gestão de obras.\n\nSua função é ler mensagens de texto enviadas por usuários e extrair as seguintes informações:\n\n- Nome da obra\n- Responsável\n- Endereço da obra\n- Tipo de material\n- Andamento da obra\n\nRegras:\n\n1. Sempre responda APENAS em JSON válido\n2. Nunca escreva texto fora do JSON\n3. Se alguma informação não estiver presente, preencha como null\n4. Corrija erros de digitação automaticamente\n5. Padronize os campos\n\nFormato de saída:\n\n{\n  \"nome_obra\": \"\",\n  \"responsavel\": \"\",\n  \"endereco\": \"\",\n  \"material\": \"\",\n  \"andamento\": \"\"\n}\n\nExemplo de entrada:\n\"Obra Jardim Europa, responsável Carlos, fica na Rua das Flores 123, material cimento e ferro, obra em andamento 70%\"\n\nSaída:\n{\n  \"nome_obra\": \"Obra Jardim Europa\",\n  \"responsavel\": \"Carlos\",\n  \"endereco\": \"Rua das Flores 123\",\n  \"material\": \"cimento e ferro\",\n  \"andamento\": \"70%\"\n}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        144,
+        -96
+      ],
+      "id": "8cd1051e-bb72-4433-9e5b-39f1c9a226b5",
+      "name": "Camarada Boris",
+      "credentials": {
+        "openAiApi": {
+          "id": "2XQY0LY1qjlq0y78",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $input.first().json.output[0].content[0].text;\n\nconst data = JSON.parse(text);\n\nreturn [{ json: data }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        0
+      ],
+      "id": "746f2f52-b7df-4bf8-b32c-4b9d967cd2cd",
+      "name": "Conversor Json",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "17NRoo1Ney4w9rWg6RCDajHA_KhAKyqN7rmppUwN1NTw",
+          "mode": "list",
+          "cachedResultName": "projeto agente ia",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17NRoo1Ney4w9rWg6RCDajHA_KhAKyqN7rmppUwN1NTw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "case 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17NRoo1Ney4w9rWg6RCDajHA_KhAKyqN7rmppUwN1NTw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "nome_obra",
+              "displayName": "nome_obra",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "responsavel",
+              "displayName": "responsavel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "endereco",
+              "displayName": "endereco",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "material",
+              "displayName": "material",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "andamento",
+              "displayName": "andamento",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "maps_link",
+              "displayName": "maps_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        832,
+        -16
+      ],
+      "id": "d4a95a5a-fb35-4e6d-af48-c9490197a95f",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "nkIBaaZm4sSI323E",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gerar Link Maps": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Camarada Boris",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Camarada Boris": {
+      "main": [
+        [
+          {
+            "node": "Conversor Json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversor Json": {
+      "main": [
+        [
+          {
+            "node": "Gerar Link Maps",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Responder Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "4dc67c20-0f34-4f74-b07b-85021ae73926",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c61dddc792964bbed41af64f3e7979db9f7e7c536e46620f0c82b3c76719bb0c"
+  },
+  "id": "QwYwp1RRmEXhHacc",
+  "tags": []
+}
